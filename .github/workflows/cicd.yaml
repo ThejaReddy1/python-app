@@ -47,8 +47,11 @@ jobs:
         shell: bash
         run: |
           echo "image tag: ${{ needs.ci.outputs.image_tag }}" 
-          pip install yq
-          yq -Yi '.image.tag = "${{ needs.ci.outputs.image_tag }}"' charts/python-app/values.yaml
+          wget -qO ./yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          # 2. Make it executable
+          chmod +x ./yq
+          # 3. Run it using ./yq (
+          ./yq -i '.image.tag = "${{ needs.ci.outputs.image_tag }}"' charts/python-app/values.yaml
 
       - name: commit changes
         uses: EndBug/add-and-commit@v9
