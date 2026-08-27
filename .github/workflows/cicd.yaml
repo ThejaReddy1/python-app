@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           echo "image tag: ${{ needs.ci.outputs.image_tag }}" 
-          wget -qO ./yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          curl -sSL -o ./yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           # 2. Make it executable
           chmod +x ./yq
           # 3. Run it using ./yq (
