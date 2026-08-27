@@ -35,13 +35,26 @@ jobs:
     runs-on: self-hosted
     needs: ci
     steps:
+
+      - name: Install ArgoCD CLI
+        shell: bash
+        run: |
+          curl -ksSL -o https://argocd-server.argocd/download/argocd-linux-amd64
+          chlmod +x argocd
+          mv argocd /usr/local/bin/argocd
+
       
       - name: Argocd Sync
-        shell: bash |
-          argocd login --server ${{ vars.ARGOCD_SERVER }} \
+        env:
+          ARGOCD_SERVER: ${{ vars.ARGOCD_SERVER }}
+          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+        shell: bash 
+        run: |
+          argocd login --server $ARGOCD_SERVER \
             --insecure \
             --grpc-web \
-            --username ${{ secrets.ARGOCD_USERNAME }} \
-            --password ${{ secrets.ARGOCD_PASSWORD }}
+            --username $ARGOCD_USERNAME \
+            --password $ARGOCD_PASSWORD
           argocd app sync python-app
 
