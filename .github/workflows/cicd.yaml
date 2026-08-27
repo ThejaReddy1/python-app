@@ -9,7 +9,7 @@ jobs:
 
   ci:
     outputs:
-      image: ${{ steps.meta.outputs.tags }}
+      image_tag: ${{ steps.meta.outputs.version }}
 
     runs-on: ubuntu-latest
     steps:
@@ -39,14 +39,14 @@ jobs:
     needs: ci
 
     steps:
-    
+
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Modify values file
         shell: bash
         run: |
-          echo "image: ${{ needs.ci.outputs.image }}" 
+          echo "image tag: ${{ needs.ci.outputs.image_tag }}" 
           pip install yq
           yq -Yi '.image.tag = "${{ needs.ci.outputs.image_tag }}"' charts/python-app/values.yaml
 
