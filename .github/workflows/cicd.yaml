@@ -47,7 +47,7 @@ jobs:
       - name: Argocd Sync
         shell: bash 
         run: |
-          argocd login --server ${{ vars.ARGOCD_SERVER }} \
+          argocd login ${{ vars.ARGOCD_SERVER }} \
             --insecure \
             --grpc-web \
             --username ${{ secrets.ARGOCD_USERNAME }} \
