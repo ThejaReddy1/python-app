@@ -13,7 +13,7 @@ def get_details():
         'timestamp': datetime.datetime.now().strftime("%I:%M:%S %p on %B %d, %Y"),
         'version': '1.0.0',
         'message': 'You are doing great, human! 😁👍',
-        'description': 'This is a sample API for demonstration purposes.'
+        'description': 'This is a sample API for demonstration purposes.😁'
     }
     return jsonify(details)
 
