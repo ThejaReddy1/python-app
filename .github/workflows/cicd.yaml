@@ -1,13 +1,14 @@
-name: ci
+name: cicd
 
 on:
   push:
-    paths: [ 'src/**', 'Dockerfile', '.github/workflows/ci.yaml' ]
+    paths: [ 'src/**', 'Dockerfile' ]
     branches: [ main ]
 
 jobs:
-  docker:
-    runs-on: self-hosted
+
+  ci:
+    runs-on: ubuntu-latest
     steps:
 
       - name: Docker meta
@@ -29,3 +30,18 @@ jobs:
         with:
           push: true
           tags: ${{ steps.meta.outputs.tags}}
+  
+  cd: 
+    runs-on: self-hosted
+    needs: ci
+    steps:
+      
+      - name: Argocd Sync
+        shell: bash |
+          argocd login --server ${{ vars.ARGOCD_SERVER }} \
+            --insecure \
+            --grpc-web \
+            --username ${{ secrets.ARGOCD_USERNAME }} \
+            --password ${{ secrets.ARGOCD_PASSWORD }}
+          argocd app sync python-app
+
