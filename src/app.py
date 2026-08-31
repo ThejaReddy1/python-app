@@ -13,7 +13,7 @@ def get_details():
         'timestamp': datetime.datetime.now().strftime("%I:%M:%S %p on %B %d, %Y"),
         'version': '1.0.0',
         'message': 'You are doing great, human! 😁👍',
-        'description': 'This is a sample API for demonstration purposes.'
+        'description': 'This is a simple Flask application that provides two API endpoints: /api/v1/details and /api/v1/healthz. The /api/v1/details endpoint returns information about the server, including the hostname, current timestamp, version, and a motivational message. The /api/v1/healthz endpoint returns the health status of the application along with the current timestamp.'
     }
     return jsonify(details)
 
