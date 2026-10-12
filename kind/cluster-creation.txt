@@ -3,12 +3,12 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
-  kubeadmconfigPatches:
+  kubeadmConfigPatches:
   - |
     kind: InitConfiguration
-  nodeRegistration:
-    kubeletExtraArgs:
-      node-labels: "ingress-ready=true"
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
   extraPortMappings:
   - containerPort: 80
     hostPort: 80
@@ -17,3 +17,16 @@ nodes:
     hostPort: 443
     protocol: TCP
 EOF
+
+
+
+# Ingress Controller installation 
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml 
+
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+
+kubectl get pods -n ingress-nginx
+
