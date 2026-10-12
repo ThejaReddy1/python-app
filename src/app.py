@@ -15,6 +15,7 @@ def get_info():
         'message': 'You are doing great, human! 😁👍',
         'description': 'This is a simple Flask application that provides information about the server and its health status. It has two endpoints: one for retrieving server details and another for checking the health of the application.',
         'deployed_on': 'kubernetes',
+        'deployment_strategy': 'GitOps'
     }), 200
 
 @app.route('/api/v1/healthz', methods=['GET'])
