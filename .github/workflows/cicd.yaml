@@ -2,7 +2,7 @@ name: cicd
 
 on:
   push:
-    paths: [ 'src/**', 'Dockerfile' ]
+    paths: [ 'src/**' , 'Dockerfile' ]
     branches: [ main ]
 
 jobs:
@@ -80,4 +80,5 @@ jobs:
             --password ${{ secrets.ARGOCD_PASSWORD }}
 
           argocd app sync python-app
+          argocd app wait python-app --health --timeout 300
 
